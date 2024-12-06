@@ -5,42 +5,162 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Claude Conseil</title>
     <style>
+        /* Style général de la page */
         body {
-            font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000; /* Fond noir */
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Nécessaire pour les images en arrière-plan */
+}
+
+/* Image de fond ajustée */
+.background-image {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%; /* Réduction de la taille de l'affiche */
+    opacity: 0.5; /* Transparence */
+    z-index: -1; /* Place derrière le contenu principal */
+}
+
+
+        /* Fenêtre principale */
+        .window {
+            background-color: #000;
+            border: 2px solid #fff;
+            padding: 20px;
+            width: 300px;
             text-align: center;
-            margin: 50px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            position: relative;
         }
-        h1 {
-            color: #333;
-        }
-        a {
-            display: block;
-            margin: 20px 0;
-            text-decoration: none;
-            color: #007BFF;
-            font-size: 18px;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        .password {
-            margin-top: 20px;
-            padding: 10px;
+
+        /* Style des liens */
+        .link {
+            margin: 10px 0;
             font-size: 16px;
-            color: #555;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            display: inline-block;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px;
+            background-color: #222;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
+
+        .link:hover {
+            background-color: #444;
+            transform: translateY(-2px);
+        }
+
+        .link img {
+            height: 20px; /* Ajuste la hauteur des logos */
+            object-fit: cover;
+        }
+
+        /* Recadrer le logo de César */
+        .cesar-logo {
+            object-fit: cover;
+            object-position: top;
+        }
+
+        /* Texte pour copier le mot de passe Vimeo */
+        .copy-text {
+            margin-top: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: underline;
+            color: #fff;
+        }
+
+        .copy-text:hover {
+            color: #ccc;
+        }
+/* Style du copyright */
+.copyright {
+    margin-top: 20px;
+    font-size: 10px;
+    text-align: center;
+    color: #888; /* Couleur grise pour le texte */
+}
+        /* Message de confirmation ou d'erreur */
+        .message {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #0f0; /* Vert pour confirmation */
+            display: none; /* Masqué par défaut */
+        }
+
+        .message.error {
+            color: #f00; /* Rouge pour erreur */
+        }
+
+        /* GIF de l'oiseau */
+        /* .bird-gif {
+            position: absolute;
+            bottom: -40px; /* Place l'oiseau en bas */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: auto;
+        } */
     </style>
 </head>
 <body>
-    <h1>Bienvenue sur Claude Conseil</h1>
-    <a href="https://claudeconseil.fr" target="_blank">Site web Claude Conseil</a>
-    <a href="https://www.academie-césar.org" target="_blank">Plateforme des César</a>
-    <a href="https://vimeo.com" target="_blank">Lien Vimeo</a>
-    <div class="password">
-        Mot de passe Vimeo : <strong>VotreMotDePasseIci</strong>
+    <!-- Contenu de la fenêtre -->
+    <div class="window">
+        <a href="https://visionnage.academie-cinema.org/courts-metrages-cesar-2025/les-mysterieuses-aventures-de-claude-conseil" class="link" target="_blank">
+            <img src="https://firebasestorage.googleapis.com/v0/b/claude-conseil.firebasestorage.app/o/SITELIEN%2Ftitre%20blanc%20ce%CC%81sar.png?alt=media&token=c65a07b5-a38c-4805-9637-8c9603207b6d" alt="César logo" class="cesar-logo">
+        </a>
+        <a href="https://claudeconseil.fr" class="link" target="_blank">
+            <img src="https://firebasestorage.googleapis.com/v0/b/claude-conseil.firebasestorage.app/o/SITELIEN%2FLe%20Myste%CC%81rieux%20Site%20(1).png?alt=media&token=1d760958-8a77-4f3e-86f3-974bfdbd6868" alt="Claude Conseil Site">
+        </a>
+        
+        <a href="https://vimeo.com/808127687" class="link" target="_blank">
+            <!-- Lien  -->
+            <img src="https://firebasestorage.googleapis.com/v0/b/claude-conseil.firebasestorage.app/o/SITELIEN%2Flogo%20vimeo.png?alt=media&token=08cbc4ae-c706-42fd-b4df-af06fb8dd631" alt="Vimeo logo">
+        </a>
+        <div class="copy-text" onclick="copyToClipboard()">Copier le mot de passe Vimeo</div>
+        <!-- Ajoutez cette ligne en dessous -->
+<div class="copyright">
+    © 2024 #ClaudeConseilPresidente
+</div>
+        <!-- Message de confirmation/erreur -->
+        <div id="message" class="message"></div>
+        
+        <!-- GIF de l'oiseau -->
+        <!-- <img src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif" alt="Petit oiseau" class="bird-gif"> -->
     </div>
+    
+
+    <script>
+        function copyToClipboard() {
+            const password = "desoiseauxpetitsetgrands";
+            const messageElement = document.getElementById("message");
+
+            navigator.clipboard.writeText(password)
+                .then(() => {
+                    messageElement.textContent = "Mot de passe copié avec succès !";
+                    messageElement.classList.remove("error");
+                    messageElement.style.display = "block";
+                })
+                .catch(() => {
+                    messageElement.textContent = "Erreur lors de la copie du mot de passe.";
+                    messageElement.classList.add("error");
+                    messageElement.style.display = "block";
+                });
+        }
+    </script>
+
 </body>
 </html>
